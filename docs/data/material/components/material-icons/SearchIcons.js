@@ -583,9 +583,13 @@ export default function SearchIcons() {
 
   const icons = React.useMemo(() => {
     const keys = query === '' ? null : searchIndex.search(query, { limit: 3000 });
-    return (keys === null ? allIcons : keys.map((key) => allIconsMap[key])).filter(
-      (icon) => theme === icon.theme,
-    );
+    const searchedIcons = keys === null ? allIcons : keys.map((key) => allIconsMap[key]);
+
+    if (theme === 'All') {
+      return searchedIcons;
+    }
+
+    return searchedIcons.filter((icon) => icon.theme === theme);
   }, [query, theme]);
 
   const deferredIcons = React.useDeferredValue(icons);
@@ -622,7 +626,7 @@ export default function SearchIcons() {
             value={theme}
             onChange={(event) => setTheme(event.target.value)}
           >
-            {['Filled', 'Outlined', 'Rounded', 'Two tone', 'Sharp'].map(
+            {['All', 'Filled', 'Outlined', 'Rounded', 'Two tone', 'Sharp'].map(
               (currentTheme) => {
                 return (
                   <FormControlLabel
