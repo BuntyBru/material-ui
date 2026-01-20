@@ -583,7 +583,8 @@ export default function SearchIcons() {
 
   const icons = React.useMemo(() => {
     const keys = query === '' ? null : searchIndex.search(query, { limit: 3000 });
-    const searchedIcons = keys === null ? allIcons : keys.map((key) => allIconsMap[key]);
+    const searchedIcons =
+      keys === null ? allIcons : keys.map((key) => allIconsMap[key]);
 
     if (theme === 'All') {
       return searchedIcons;
